@@ -1,0 +1,201 @@
+================================================================================
+ROTA SEGURA MZ — Requisitos UI/UX
+Categoria 2: Rota Segura (Evacuação) | Hackathon Cursor Moçambique
+================================================================================
+
+CONTEXTO
+--------
+Solução web (mobile-first) + USSD para utilizadores sem smartphone.
+Tema: ajudar comunidades moçambicanas a evacuar com segurança durante inundações.
+Requisitos globais: Português, 3G lento, demonstração funcional ponta a ponta.
+
+Proposta de produto: Rota Segura MZ — "Saiba onde está seguro. Chegue vivo."
+
+
+================================================================================
+PERSONAS
+================================================================================
+
+Ana, 34 anos       — Mãe em Beira, smartphone básico, dados limitados → Web mobile
+João, 58 anos      — Pescador, telefone feature phone                  → USSD
+Maria, voluntária  — Atualiza capacidade do abrigo                      → Web (modo staff)
+Autoridade local   — Marca zonas inundadas (opcional no hackathon)      → Web admin
+
+
+================================================================================
+FUNCIONALIDADES CORE (MVP)
+================================================================================
+
+1. MAPA INTERATIVO DE EVACUAÇÃO (Web mobile) — Ecrã principal
+   - Mapa com camadas:
+     * Zonas inundáveis / em risco (polígonos coloridos)
+     * Abrigos / centros de evacuação (pins)
+     * Rotas seguras (linhas entre ponto A → abrigo)
+     * Localização do utilizador (GPS, com fallback manual)
+   - Filtros simples: "Mostrar só abrigos com vaga"
+   - Modo offline leve: mapa + abrigos em cache após primeira visita
+   - Indicador de qualidade da ligação ("Modo económico activo")
+   - UX: botão flutuante grande — "Encontrar abrigo mais próximo"
+
+2. DETALHE DO ABRIGO
+   - Nome, morada, distância a pé / tempo estimado
+   - Capacidade em tempo real: 42/80 lugares + barra visual
+   - Estado: Com vaga | Quase cheio | Cheio
+   - Serviços: água, WC, medicamentos, espaço para famílias
+   - Botão "Como chegar" → abre rota segura no mapa
+   - Botão "Partilhar localização" (WhatsApp/SMS com link)
+
+3. CALCULADOR DE ROTA SEGURA
+   - Origem: GPS automático ou "Estou no bairro X"
+   - Destino: abrigo escolhido ou "Abrigo mais próximo com vaga"
+   - Rota evita zonas vermelhas (inundadas)
+   - Instruções passo a passo em português simples
+   - Modo lista (sem mapa) para 3G muito lento — poupa dados
+
+4. ALERTAS DE EVACUAÇÃO (integrado)
+   - Banner no topo: "Alerta: Bairro Munhava em risco elevado. Evacue agora."
+   - Notificação push (se PWA) ou SMS (se backend permitir)
+   - Código de cor por nível: Verde / Amarelo / Vermelho
+
+5. ACOMPANHAMENTO DE CAPACIDADE EM TEMPO REAL (bónus README)
+   - Modo voluntário / staff (login simples por PIN)
+   - Lista de abrigos atribuídos
+   - Botões grandes: +5 pessoas / -5 pessoas / Marcar cheio
+   - Timestamp: "Actualizado há 3 min"
+   - UX pública: barra de progresso + texto claro
+
+6. CANAL USSD (feature phones) — Exemplo: *123#
+
+   Menu principal:
+   Bem-vindo à Rota Segura MZ
+   1. Abrigo mais próximo
+   2. Verificar capacidade de abrigo
+   3. Alertas na minha zona
+   4. Instruções de evacuação
+   0. Sair
+
+   Fluxo 1 — Abrigo mais próximo:
+   Introduza o código do bairro:
+   [1] Munhava  [2] Matacuane  [3] Ponta-Gêa
+   → Abrigo: Escola Primária X
+   → Distância: ~1.2 km
+   → Vagas: 12/80
+   → Siga pela Av. X, evite Rua Y
+
+   Fluxo 2 — Capacidade:
+   Código do abrigo: ___
+   → Escola X: 42/80 (COM VAGA)
+
+   Fluxo 3 — Alertas:
+   A sua zona: MUNHAVA
+   Estado: VERMELHO - Evacue imediatamente
+   Abrigo recomendado: Escola X (1.2 km)
+
+   Limitações USSD: sem mapa visual; texto curto, números e códigos de bairro.
+
+
+================================================================================
+ESTRUTURA DE ECRÃS (Web mobile)
+================================================================================
+
+ #  Ecrã                                    Prioridade
+--- --------------------------------------  ----------
+ 1  Splash / Onboarding (permitir GPS)      P2
+ 2  Mapa principal (hub)                    P0
+ 3  Lista de abrigos (alternativa ao mapa)  P0
+ 4  Detalhe do abrigo                       P0
+ 5  Navegação / rota passo a passo          P0
+ 6  Alertas activos                         P1
+ 7  Seleccionar bairro (manual, sem GPS)    P1
+ 8  Modo staff (actualizar capacidade)      P1
+ 9  Sobre / Ajuda / USSD                    P2
+
+Total MVP: 5–6 ecrãs bem feitos > 10 ecrãs incompletos.
+
+
+================================================================================
+FLUXOS DE UTILIZADOR PRINCIPAIS
+================================================================================
+
+[Alerta recebido]
+  → Abrir app → Ver mapa com zona vermelha
+  → "Encontrar abrigo" → Rota segura → Chegar
+
+[Sem GPS]
+  → Escolher bairro → Lista abrigos com vaga → Ver rota em lista
+
+[Feature phone]
+  → *123# → Código bairro → Receber instruções no ecrã USSD
+
+[Voluntária no abrigo]
+  → Login PIN → +5 pessoas → Capacidade actualizada no mapa
+
+
+================================================================================
+REQUISITOS UI/UX
+================================================================================
+
+Mobile-first     — Botões ≥ 48px, uma acção principal por ecrã
+3G lento         — Mapa simplificado, modo lista, lazy load, skeleton loaders
+Português        — Linguagem simples, sem jargão técnico
+Acessibilidade   — Alto contraste, ícones + texto, funciona com uma mão
+Pressão / stress — Cores de alerta claras, CTAs grandes, poucos passos
+Offline          — Cache de abrigos + rotas pré-calculadas por bairro
+
+
+================================================================================
+PALETA E LINGUAGEM VISUAL
+================================================================================
+
+Vermelho  — perigo / inundado / cheio
+Amarelo   — atenção / quase cheio
+Verde     — seguro / com vaga
+Azul      — água / rotas
+Tipografia: sans-serif legível (Inter, system-ui)
+Ícones: abrigo, rota, alerta, pessoa, água
+
+
+================================================================================
+DADOS MOCK REALISTAS (protótipo)
+================================================================================
+
+Abrigo                          Bairro       Capacidade  Estado
+Escola Primária 24 de Julho     Munhava      42/80       Com vaga
+Centro Comunitário Matacuane    Matacuane    78/80       Quase cheio
+Ginásio Municipal               Ponta-Gêa    80/80       Cheio
+Igreja São Francisco            Chipangara   15/60       Com vaga
+
+Zonas inundáveis: polígonos em torno de rios/costas (Beira, Quelimane, etc.)
+
+
+================================================================================
+ESCOPO — O QUE CORTAR SE O TEMPO APERTAR
+================================================================================
+
+CORTAR                          MANTER
+Login completo                  PIN simples para staff
+Admin de zonas                  Zonas hardcoded / JSON
+Push notifications              Banner in-app + USSD
+Histórico de capacidade         Capacidade actual
+Múltiplas cidades               1 cidade (ex.: Beira)
+
+
+================================================================================
+PITCH UI/UX (3 min)
+================================================================================
+
+1. Problema: "Quando a água sobe, as pessoas não sabem para onde ir."
+2. Solução: Mapa + rotas + vagas em tempo real + USSD para todos.
+3. Demo: Ana abre o mapa → vê rota → João usa *123# → Maria actualiza vagas.
+4. Diferencial: Funciona com e sem smartphone, em 3G, em português.
+
+
+================================================================================
+PRÓXIMOS PASSOS UI/UX
+================================================================================
+
+1. Wireframes dos 5 ecrãs P0 (Figma / papel)
+2. Fluxo USSD completo (diagrama de árvore)
+3. Design system mínimo: cores, botões, cards de abrigo
+4. Protótipo clicável (Figma) para a demo
+5. User journey Ana + João numa folha A4 para o pitch
