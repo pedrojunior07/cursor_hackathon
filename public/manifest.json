@@ -1,0 +1,11 @@
+{
+  "name": "Rota Segura MZ",
+  "short_name": "Rota Segura",
+  "description": "Evacuação em cheias — mapa, USSD e SMS",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "lang": "pt",
+  "orientation": "portrait"
+}

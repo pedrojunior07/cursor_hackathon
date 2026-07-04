@@ -30,4 +30,12 @@ As equipas escolhem uma de quatro categorias. As categorias mantêm o tema focad
 
 ---
 
+## Projecto da equipa
+
+**Categoria escolhida:** 2 — Rota Segura (Evacuação)
+
+Documentação detalhada: [docs/rota-segura.md](docs/rota-segura.md)
+
+---
+
 *Hackathon Cursor*
