@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="pt"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        .step-active {
+            border-left: 4px solid #af101a;
+        }
+        .route-line {
+            position: absolute;
+            left: 23px;
+            top: 48px;
+            bottom: -24px;
+            width: 2px;
+            background-color: #e4beba;
+            z-index: 0;
+        }
+        .last-step .route-line {
+            display: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#5c4300",
+                        "on-secondary-container": "#003567",
+                        "secondary-fixed-dim": "#a5c8ff",
+                        "outline-variant": "#e4beba",
+                        "on-primary-container": "#fff2f0",
+                        "on-surface-variant": "#5b403d",
+                        "inverse-primary": "#ffb3ac",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#fff0ef",
+                        "primary-fixed-dim": "#ffb3ac",
+                        "on-tertiary-container": "#fff3e3",
+                        "on-secondary-fixed-variant": "#004786",
+                        "tertiary": "#715300",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#ffe2de",
+                        "primary-fixed": "#ffdad6",
+                        "surface-container-highest": "#f9dcd9",
+                        "surface-tint": "#ba1a20",
+                        "background": "#fff8f7",
+                        "on-surface": "#271816",
+                        "on-tertiary-fixed": "#261a00",
+                        "tertiary-container": "#8f6a00",
+                        "secondary-container": "#54a0fe",
+                        "tertiary-fixed": "#ffdfa0",
+                        "on-error-container": "#93000a",
+                        "outline": "#8f6f6c",
+                        "inverse-surface": "#3e2c2a",
+                        "on-primary-fixed": "#410003",
+                        "surface": "#fff8f7",
+                        "primary-container": "#d32f2f",
+                        "tertiary-fixed-dim": "#f8bd2a",
+                        "on-secondary-fixed": "#001c3a",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#930010",
+                        "primary": "#af101a",
+                        "surface-dim": "#f1d3d0",
+                        "surface-variant": "#f9dcd9",
+                        "inverse-on-surface": "#ffedeb",
+                        "surface-container": "#ffe9e7",
+                        "surface-bright": "#fff8f7",
+                        "on-background": "#271816",
+                        "secondary-fixed": "#d4e3ff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#005faf",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "touch-target-min": "48px",
+                        "gutter-mobile": "16px",
+                        "gutter-desktop": "24px",
+                        "stack-lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "button-text": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "button-text": ["16px", {"lineHeight": "24px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "26px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-32">
+<!-- TopAppBar (As per JSON) -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-gutter-mobile h-touch-target-min bg-error dark:bg-error text-on-error border-b-2 border-on-error-container shadow-none">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-on-error tracking-tight">ROTA SEGURA MZ</h1>
+</div>
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</header>
+<!-- Content Canvas -->
+<main class="pt-16 px-gutter-mobile max-w-2xl mx-auto">
+<!-- Header Section -->
+<div class="py-stack-lg border-b border-outline-variant mb-stack-lg">
+<h2 class="font-headline-md text-headline-md text-primary leading-tight">
+                Rota para Escola Primária 24 de Julho
+            </h2>
+<p class="text-label-lg font-label-lg text-on-surface-variant mt-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="near_me">near_me</span>
+                Tempo estimado: 12 min • 1.4 km
+            </p>
+</div>
+<!-- Navigation Map Preview (Contextual Utility) -->
+<div class="relative w-full h-48 rounded-xl overflow-hidden mb-stack-lg border-2 border-outline-variant">
+<div class="w-full h-full bg-cover bg-center" data-alt="A detailed digital map interface showing a simplified urban layout of Maputo, Mozambique. The map features a highlighted red navigation path cutting through high-contrast streets. A clear warning symbol indicates a flooded zone near Rua 24 de Julho. The visual style is utilitarian, with high contrast for outdoor visibility and a minimal color palette of reds, whites, and greys." data-location="Maputo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA70Wueruc7t0vvLalUUOl7QvxXsJlHn8PN7gmH1l4Y_wd9pIjF2Sd8EPXCpg_1bq30W0Z695aVXaoLlyU2qBu-DVnrbsNXXOL2eZ_3bOhvemsfzIAMHRmYgUBUlmVazVsbdkZMPf6Z6lJniHsLbBfvy0kOoCK7iZWUGjmCWLAb7Z41t8IpSW5s7X9LB6WP66-dKLx0qDcpO1E4WcFBlw5w9zdEdz7-Z413OXAoxmFivSIxwVB_kXIsvsKKn_KzLwa9BcojVh7ox9D2')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/20 to-transparent"></div>
+<div class="absolute bottom-3 left-3 bg-surface-container-highest px-3 py-1 rounded-full text-label-lg font-label-lg flex items-center gap-1 border border-outline">
+<span class="material-symbols-outlined text-error text-[16px]" data-icon="location_on">location_on</span>
+                Sua Localização
+            </div>
+</div>
+<!-- Step-by-Step List -->
+<div class="space-y-4">
+<!-- Step 1 -->
+<div class="relative flex gap-4 p-4 bg-surface-container rounded-xl border-2 border-primary-container/20 step-active">
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 bg-primary text-on-primary rounded-full flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined" data-icon="straight">straight</span>
+</div>
+<div class="route-line"></div>
+</div>
+<div class="flex-1 pt-1">
+<p class="font-headline-md text-headline-md text-on-surface leading-snug">
+                        Siga pela Av. Eduardo Mondlane por 800m
+                    </p>
+<p class="text-label-lg font-label-lg text-on-surface-variant mt-1">Mantenha-se na faixa da esquerda</p>
+</div>
+</div>
+<!-- Step 2: Warning Step -->
+<div class="relative flex gap-4 p-4 bg-error-container rounded-xl border-2 border-error">
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 bg-error text-on-error rounded-full flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="route-line"></div>
+</div>
+<div class="flex-1 pt-1">
+<p class="font-headline-md text-headline-md text-on-error-container leading-snug font-extrabold">
+                        ⚠️ EVITE a Rua 24 de Julho (Zona inundada)
+                    </p>
+<p class="text-label-lg font-label-lg text-on-error-container opacity-90 mt-1">Risco alto de interrupção de tráfego</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative flex gap-4 p-4 bg-surface-container rounded-xl border-2 border-outline-variant last-step">
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 bg-secondary text-on-secondary rounded-full flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined" data-icon="turn_right">turn_right</span>
+</div>
+<div class="route-line"></div>
+</div>
+<div class="flex-1 pt-1">
+<p class="font-headline-md text-headline-md text-on-surface leading-snug">
+                        Vire à direita na Escola X
+                    </p>
+<p class="text-label-lg font-label-lg text-on-surface-variant mt-1">Destino a 150m após a curva</p>
+</div>
+</div>
+</div>
+<!-- Call to Action -->
+<div class="mt-stack-lg">
+<button class="w-full h-touch-target-min bg-primary text-on-primary font-button-text text-button-text rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-lg" onclick="this.classList.add('scale-95'); setTimeout(() => this.classList.remove('scale-95'), 150);">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+                Concluir percurso
+            </button>
+</div>
+</main>
+<!-- BottomNavBar (As per JSON) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-2 bg-surface border-t-2 border-outline-variant h-touch-target-min">
+<!-- Mapa Tab -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all duration-150 rounded-full px-4 py-1">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-label-lg text-label-lg">Mapa</span>
+</button>
+<!-- Lista Tab (ACTIVE) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-90 transition-all duration-150">
+<span class="material-symbols-outlined" data-icon="list_alt" style="font-variation-settings: 'FILL' 1;">list_alt</span>
+<span class="font-label-lg text-label-lg">Lista</span>
+</button>
+<!-- Alertas Tab -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all duration-150 rounded-full px-4 py-1">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+<span class="font-label-lg text-label-lg">Alertas</span>
+</button>
+<!-- Staff Tab -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all duration-150 rounded-full px-4 py-1">
+<span class="material-symbols-outlined" data-icon="shield_person">shield_person</span>
+<span class="font-label-lg text-label-lg">Staff</span>
+</button>
+</nav>
+<!-- Floating Atmosphere Script -->
+<script>
+        // Simple interaction for the steps to simulate focus
+        document.querySelectorAll('.space-y-4 > div').forEach(step => {
+            step.addEventListener('click', () => {
+                document.querySelectorAll('.space-y-4 > div').forEach(s => s.classList.remove('step-active', 'border-primary-container/50'));
+                step.classList.add('step-active', 'border-primary-container/50');
+            });
+        });
+    </script>
+</body></html>

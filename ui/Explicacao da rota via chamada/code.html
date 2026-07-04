@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html lang="pt"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ROTA SEGURA MZ - IVR Voice Interface</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#5c4300",
+                        "on-secondary-container": "#003567",
+                        "secondary-fixed-dim": "#a5c8ff",
+                        "outline-variant": "#e4beba",
+                        "on-primary-container": "#fff2f0",
+                        "on-surface-variant": "#5b403d",
+                        "inverse-primary": "#ffb3ac",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#fff0ef",
+                        "primary-fixed-dim": "#ffb3ac",
+                        "on-tertiary-container": "#fff3e3",
+                        "on-secondary-fixed-variant": "#004786",
+                        "tertiary": "#715300",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#ffe2de",
+                        "primary-fixed": "#ffdad6",
+                        "surface-container-highest": "#f9dcd9",
+                        "surface-tint": "#ba1a20",
+                        "background": "#fff8f7",
+                        "on-surface": "#271816",
+                        "on-tertiary-fixed": "#261a00",
+                        "tertiary-container": "#8f6a00",
+                        "secondary-container": "#54a0fe",
+                        "tertiary-fixed": "#ffdfa0",
+                        "on-error-container": "#93000a",
+                        "outline": "#8f6f6c",
+                        "inverse-surface": "#3e2c2a",
+                        "on-primary-fixed": "#410003",
+                        "surface": "#fff8f7",
+                        "primary": "#af101a",
+                        "surface-dim": "#f1d3d0",
+                        "surface-variant": "#f9dcd9",
+                        "inverse-on-surface": "#ffedeb",
+                        "surface-container": "#ffe9e7",
+                        "surface-bright": "#fff8f7",
+                        "on-background": "#271816",
+                        "secondary-fixed": "#d4e3ff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#005faf",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "touch-target-min": "48px",
+                        "gutter-mobile": "16px",
+                        "gutter-desktop": "24px",
+                        "stack-lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "button-text": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "button-text": ["16px", {"lineHeight": "24px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "26px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .dialer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(0.95); opacity: 0.5; }
+        }
+        .pulse {
+            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+        .wave {
+            height: 4px;
+            width: 3px;
+            background: #af101a;
+            margin: 0 1px;
+            display: inline-block;
+            animation: wave-anim 1s ease-in-out infinite;
+        }
+        @keyframes wave-anim {
+            0%, 100% { height: 4px; }
+            50% { height: 16px; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-gutter-mobile h-touch-target-min bg-error dark:bg-error border-b-2 border-on-error-container">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-error" data-icon="warning">warning</span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-on-error tracking-tight">ROTA SEGURA MZ</h1>
+</div>
+<button class="w-touch-target-min h-touch-target-min flex items-center justify-center text-on-error hover:bg-on-error/10 Active: scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-[48px] pb-[72px] flex flex-col items-center justify-center px-gutter-mobile">
+<!-- Phone UI Container (Feature Phone Aesthetic) -->
+<div class="w-full max-w-sm bg-surface-container-highest border-4 border-outline rounded-xl p-4 shadow-2xl relative overflow-hidden">
+<!-- Call Header -->
+<div class="text-center mt-4">
+<div class="inline-flex items-center justify-center p-4 bg-primary rounded-full mb-4 pulse">
+<span class="material-symbols-outlined text-on-primary text-4xl" data-icon="call" style="font-variation-settings: 'FILL' 1;">call</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">800 123 123</h2>
+<p class="font-label-lg text-label-lg text-primary uppercase tracking-widest animate-pulse">Chamada em curso...</p>
+<p class="font-body-md text-on-surface-variant">00:42</p>
+</div>
+<!-- Audio Visualization Simulation -->
+<div class="flex items-center justify-center h-8 my-6 gap-0.5">
+<div class="wave" style="animation-delay: 0.1s"></div>
+<div class="wave" style="animation-delay: 0.2s"></div>
+<div class="wave" style="animation-delay: 0.3s"></div>
+<div class="wave" style="animation-delay: 0.4s"></div>
+<div class="wave" style="animation-delay: 0.5s"></div>
+<div class="wave" style="animation-delay: 0.6s"></div>
+<div class="wave" style="animation-delay: 0.7s"></div>
+<div class="wave" style="animation-delay: 0.8s"></div>
+</div>
+<!-- Transcription Bubble -->
+<div class="bg-surface-container-low border-2 border-outline-variant p-4 rounded-lg mb-8 relative">
+<div class="absolute -top-3 left-4 bg-primary text-on-primary px-2 py-0.5 rounded text-[10px] font-bold uppercase">Áudio (IVR)</div>
+<p class="font-body-md text-on-surface italic leading-relaxed">
+<span class="material-symbols-outlined align-middle mr-1 text-primary" data-icon="volume_up">volume_up</span>
+                    "Bem-vindo ao <strong>Rota Segura</strong>. Para saber o abrigo mais próximo, <strong>prima 1</strong>. Para alertas de zona, <strong>prima 2</strong>. Para assistência urgente, aguarde..."
+                </p>
+</div>
+<!-- In-Call Actions -->
+<div class="grid grid-cols-3 gap-4 mb-8">
+<button class="flex flex-col items-center gap-2 group hover:bg-surface-container-high p-2 rounded-lg transition-colors">
+<div class="w-12 h-12 rounded-full border-2 border-outline flex items-center justify-center group-active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="mic_off">mic_off</span>
+</div>
+<span class="font-label-lg text-on-surface-variant">Mudo</span>
+</button>
+<button class="flex flex-col items-center gap-2 group hover:bg-surface-container-high p-2 rounded-lg transition-colors">
+<div class="w-12 h-12 rounded-full border-2 border-outline flex items-center justify-center group-active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="apps">apps</span>
+</div>
+<span class="font-label-lg text-on-surface-variant">Teclado</span>
+</button>
+<button class="flex flex-col items-center gap-2 group hover:bg-surface-container-high p-2 rounded-lg transition-colors">
+<div class="w-12 h-12 rounded-full border-2 border-outline flex items-center justify-center group-active:scale-90 transition-transform bg-secondary-container">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="volume_up" style="font-variation-settings: 'FILL' 1;">volume_up</span>
+</div>
+<span class="font-label-lg text-on-secondary-container">Altifalante</span>
+</button>
+</div>
+<!-- End Call Button -->
+<button class="w-full h-touch-target-min bg-error text-on-error font-button-text text-button-text rounded-full flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="call_end" style="font-variation-settings: 'FILL' 1;">call_end</span>
+                DESLIGAR
+            </button>
+</div>
+<!-- Secondary Information Card -->
+<div class="w-full max-w-sm mt-stack-md bg-surface border-2 border-outline-variant p-4 rounded-xl flex items-center gap-4">
+<div class="bg-tertiary-container p-3 rounded-lg">
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="support_agent">support_agent</span>
+</div>
+<div>
+<h4 class="font-headline-md text-on-surface">Linha Gratuita</h4>
+<p class="font-body-md text-on-surface-variant">Disponível mesmo sem saldo ou internet.</p>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-2 bg-surface border-t-2 border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high w-full py-1" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="font-label-lg text-label-lg">Mapa</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high w-full py-1" href="#">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+<span class="font-label-lg text-label-lg">Lista</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high w-full py-1" href="#">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+<span class="font-label-lg text-label-lg">Alertas</span>
+</a>
+<!-- Staff active mapping for IVR could be debatable, but using it as context for "operational/admin" tasks if needed, 
+             however, since none are perfect matches for a phone call, we treat this as a top-level view. 
+             If we must pick an active, "Alertas" is closest to IVR emergency info. -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high w-full py-1" href="#">
+<span class="material-symbols-outlined" data-icon="shield_person">shield_person</span>
+<span class="font-label-lg text-label-lg">Staff</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for the end-call button
+        const endCallBtn = document.querySelector('button[class*="bg-error"]');
+        if(endCallBtn) {
+            endCallBtn.addEventListener('click', () => {
+                const callStatus = document.querySelector('.animate-pulse');
+                if(callStatus) {
+                    callStatus.textContent = "CHAMADA TERMINADA";
+                    callStatus.classList.remove('animate-pulse');
+                    callStatus.classList.remove('text-primary');
+                    callStatus.classList.add('text-on-surface-variant');
+                }
+                setTimeout(() => {
+                    alert('Chamada encerrada.');
+                }, 500);
+            });
+        }
+    </script>
+</body></html>
