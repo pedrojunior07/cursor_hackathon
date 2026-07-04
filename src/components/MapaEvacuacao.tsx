@@ -9,9 +9,11 @@ import type { EvacuationPlan } from "@/types";
 
 type Props = {
   onPlano?: (plano: EvacuationPlan) => void;
+  /** ID de abrigo pré-seleccionado (vindo da tela de detalhe) */
+  abrigoAlvoId?: string;
 };
 
-export function MapaEvacuacao({ onPlano }: Props) {
+export function MapaEvacuacao({ onPlano, abrigoAlvoId }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [posicao, setPosicao] = useState<[number, number] | null>(null);
@@ -202,14 +204,14 @@ export function MapaEvacuacao({ onPlano }: Props) {
     );
   };
 
-  const calcularRota = async () => {
+  const calcularRota = useCallback(async () => {
     const origem = posicao ?? BEIRA_CENTER;
     if (!posicao) setPosicao(origem);
     marcarPosicao(origem);
     setACalcularRota(true);
     setErroRota(null);
     try {
-      const p = await obterPlanoEvacuacao(origem);
+      const p = await obterPlanoEvacuacao(origem, abrigoAlvoId);
       setPlano(p);
       onPlano?.(p);
       desenharRota(p.rotaCoordenadas);
@@ -218,57 +220,73 @@ export function MapaEvacuacao({ onPlano }: Props) {
     } finally {
       setACalcularRota(false);
     }
-  };
+  }, [posicao, abrigoAlvoId, marcarPosicao, onPlano, desenharRota]);
+
+  useEffect(() => {
+    if (!abrigoAlvoId || aCarregar) return;
+    calcularRota();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [abrigoAlvoId, aCarregar]);
+
+  const abrigoAlvo = abrigoAlvoId ? abrigos.find((a) => a.id === abrigoAlvoId) : undefined;
 
   return (
     <div className="relative flex h-full flex-col">
       <div ref={containerRef} className="min-h-[50vh] flex-1" />
 
       {aCarregar && (
-        <div className="absolute inset-0 flex items-center justify-center bg-slate-900/80">
-          <p className="text-sm text-slate-300">A carregar mapa…</p>
+        <div className="absolute inset-0 flex items-center justify-center bg-surface/90">
+          <p className="text-body-md font-sans text-on-surface-variant">A carregar mapa…</p>
         </div>
       )}
 
-      <div className="space-y-3 border-t border-slate-700 bg-slate-900 p-4">
+      <div className="space-y-3 border-t-2 border-outline-variant bg-surface p-gutter-mobile">
+        {abrigoAlvo && (
+          <div className="flex items-center gap-2 border-2 border-outline-variant bg-surface-container px-3 py-2 text-label-lg font-sans">
+            <span className="material-symbols-outlined text-secondary text-[18px]">place</span>
+            Destino escolhido: <strong>{abrigoAlvo.nome}</strong>
+          </div>
+        )}
         <div className="flex gap-2">
           <button
             type="button"
             onClick={obterGps}
-            className="flex-1 rounded-lg bg-sky-600 px-3 py-3 text-sm font-semibold text-white active:bg-sky-700"
+            className="flex h-touch-target-min flex-1 items-center justify-center gap-2 bg-secondary text-button-text font-sans text-on-secondary transition-transform active:scale-95"
           >
-            📍 A minha posição
+            <span className="material-symbols-outlined text-[20px]">my_location</span>
+            A minha posição
           </button>
           <button
             type="button"
-            onClick={calcularRota}
+            onClick={() => calcularRota()}
             disabled={aCalcularRota}
-            className="flex-1 rounded-lg bg-emerald-600 px-3 py-3 text-sm font-semibold text-white active:bg-emerald-700 disabled:opacity-60"
+            className="flex h-touch-target-min flex-1 items-center justify-center gap-2 bg-primary text-button-text font-sans text-on-primary transition-transform active:scale-95 disabled:opacity-60"
           >
-            {aCalcularRota ? "A calcular…" : "🛡️ Rota segura"}
+            <span className="material-symbols-outlined text-[20px]">directions_run</span>
+            {aCalcularRota ? "A calcular…" : "Rota segura"}
           </button>
         </div>
 
-        {erroGps && <p className="text-xs text-red-400">{erroGps}</p>}
-        {erroRota && <p className="text-xs text-red-400">{erroRota}</p>}
+        {erroGps && <p className="text-label-lg font-sans text-error">{erroGps}</p>}
+        {erroRota && <p className="text-label-lg font-sans text-error">{erroRota}</p>}
 
         {plano && (
-          <div className="rounded-lg border border-slate-600 bg-slate-800 p-3 text-sm">
+          <div className="border-2 border-outline-variant bg-surface-container-low p-3">
             <div className="flex items-center justify-between">
-              <p className="font-semibold text-emerald-400">Abrigo recomendado</p>
+              <p className="text-label-lg font-sans font-bold text-green-700">Abrigo recomendado</p>
               {plano.fonte === "ors" && (
-                <span className="rounded bg-sky-900 px-2 py-0.5 text-[10px] text-sky-300">
+                <span className="rounded bg-secondary-container px-2 py-0.5 text-[10px] text-on-secondary-container">
                   ORS · evita inundações
                 </span>
               )}
             </div>
-            <p className="mt-1 font-medium">{plano.abrigo.nome}</p>
-            <p className="text-slate-400">{plano.abrigo.bairro}</p>
-            <p className="mt-2 text-slate-300">
+            <p className="mt-1 text-body-md font-sans font-medium">{plano.abrigo.nome}</p>
+            <p className="text-body-md font-sans text-on-surface-variant">{plano.abrigo.bairro}</p>
+            <p className="mt-2 text-body-md font-sans text-on-surface-variant">
               {plano.distanciaMetros} m · ~{plano.tempoMinutos} min a pé
             </p>
-            <p className="text-slate-400">{capacidadeLabel(plano.abrigo)}</p>
-            <ul className="mt-2 space-y-1 border-t border-slate-600 pt-2 text-xs text-slate-300">
+            <p className="text-body-md font-sans text-on-surface-variant">{capacidadeLabel(plano.abrigo)}</p>
+            <ul className="mt-2 space-y-1 border-t border-outline-variant pt-2 text-label-lg font-sans text-on-surface-variant">
               {plano.passos.map((s, i) => (
                 <li key={i}>
                   {i + 1}. {s.instrucao}
@@ -278,9 +296,9 @@ export function MapaEvacuacao({ onPlano }: Props) {
           </div>
         )}
 
-        <div className="flex flex-wrap gap-3 text-xs text-slate-400">
+        <div className="flex flex-wrap gap-3 text-label-lg font-sans text-on-surface-variant">
           <span className="flex items-center gap-1">
-            <span className="inline-block h-3 w-3 rounded-full bg-red-600" /> Inundação
+            <span className="inline-block h-3 w-3 rounded-full bg-error" /> Inundação
           </span>
           <span className="flex items-center gap-1">
             <span className="inline-block h-3 w-3 rounded-full bg-orange-500" /> Alerta

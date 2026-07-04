@@ -1,13 +1,102 @@
 @import "tailwindcss";
 @import "maplibre-gl/dist/maplibre-gl.css";
 
-:root {
-  --cor-alerta: #ea580c;
-  --cor-perigo: #dc2626;
-  --cor-seguro: #16a34a;
-  --cor-agua: #0284c7;
-  --cor-fundo: #0f172a;
-  --cor-cartao: #1e293b;
+@theme {
+  --color-primary: #af101a;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #d32f2f;
+  --color-on-primary-container: #fff2f0;
+  --color-primary-fixed: #ffdad6;
+  --color-primary-fixed-dim: #ffb3ac;
+  --color-on-primary-fixed: #410003;
+  --color-on-primary-fixed-variant: #930010;
+  --color-inverse-primary: #ffb3ac;
+
+  --color-secondary: #005faf;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #54a0fe;
+  --color-on-secondary-container: #003567;
+  --color-secondary-fixed: #d4e3ff;
+  --color-secondary-fixed-dim: #a5c8ff;
+  --color-on-secondary-fixed: #001c3a;
+  --color-on-secondary-fixed-variant: #004786;
+
+  --color-tertiary: #715300;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #8f6a00;
+  --color-on-tertiary-container: #fff3e3;
+  --color-tertiary-fixed: #ffdfa0;
+  --color-tertiary-fixed-dim: #f8bd2a;
+  --color-on-tertiary-fixed: #261a00;
+  --color-on-tertiary-fixed-variant: #5c4300;
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  --color-background: #fff8f7;
+  --color-on-background: #271816;
+  --color-surface: #fff8f7;
+  --color-surface-dim: #f1d3d0;
+  --color-surface-bright: #fff8f7;
+  --color-surface-variant: #f9dcd9;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #fff0ef;
+  --color-surface-container: #ffe9e7;
+  --color-surface-container-high: #ffe2de;
+  --color-surface-container-highest: #f9dcd9;
+  --color-on-surface: #271816;
+  --color-on-surface-variant: #5b403d;
+  --color-inverse-surface: #3e2c2a;
+  --color-inverse-on-surface: #ffedeb;
+  --color-outline: #8f6f6c;
+  --color-outline-variant: #e4beba;
+  --color-surface-tint: #ba1a20;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --text-headline-lg: 32px;
+  --text-headline-lg--line-height: 40px;
+  --text-headline-lg--font-weight: 700;
+  --text-headline-lg--letter-spacing: -0.02em;
+
+  --text-headline-lg-mobile: 24px;
+  --text-headline-lg-mobile--line-height: 32px;
+  --text-headline-lg-mobile--font-weight: 700;
+
+  --text-headline-md: 20px;
+  --text-headline-md--line-height: 28px;
+  --text-headline-md--font-weight: 600;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 26px;
+  --text-body-lg--font-weight: 400;
+
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-md--font-weight: 400;
+
+  --text-label-lg: 14px;
+  --text-label-lg--line-height: 20px;
+  --text-label-lg--font-weight: 600;
+  --text-label-lg--letter-spacing: 0.05em;
+
+  --text-button-text: 16px;
+  --text-button-text--line-height: 24px;
+  --text-button-text--font-weight: 700;
+
+  --radius-DEFAULT: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-full: 0.75rem;
+
+  --spacing-touch-target-min: 48px;
+  --spacing-gutter-mobile: 16px;
+  --spacing-gutter-desktop: 24px;
+  --spacing-stack-sm: 8px;
+  --spacing-stack-md: 16px;
+  --spacing-stack-lg: 24px;
 }
 
 html,
@@ -16,10 +105,20 @@ body {
 }
 
 body {
-  background: var(--cor-fundo);
-  color: #f1f5f9;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--color-background);
+  color: var(--color-on-background);
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.material-symbols-outlined.fill-icon {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
 .maplibregl-ctrl-attrib {

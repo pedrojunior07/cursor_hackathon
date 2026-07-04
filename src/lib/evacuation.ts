@@ -147,14 +147,11 @@ export function abrigosComVagas(abrigos: Shelter[]): Shelter[] {
   return abrigos.filter((a) => a.ocupado < a.capacidadeTotal);
 }
 
-export function planoEvacuacaoLocal(
+export function planoParaAbrigo(
   origem: [number, number],
-  abrigos: Shelter[],
+  abrigo: Shelter,
   zonas: FloodZone[]
 ): EvacuationPlan {
-  const comVagas = abrigosComVagas(abrigos);
-  const lista = comVagas.length > 0 ? comVagas : abrigos;
-  const abrigo = abrigoMaisProximo(origem, lista);
   const rotaCoordenadas = waypointSeguro(origem, abrigo.coordenadas, zonas);
   const distTotal = rotaCoordenadas.reduce(
     (acc, _, i) =>
@@ -173,8 +170,42 @@ export function planoEvacuacaoLocal(
   };
 }
 
+export function planoEvacuacaoLocal(
+  origem: [number, number],
+  abrigos: Shelter[],
+  zonas: FloodZone[]
+): EvacuationPlan {
+  const comVagas = abrigosComVagas(abrigos);
+  const lista = comVagas.length > 0 ? comVagas : abrigos;
+  const abrigo = abrigoMaisProximo(origem, lista);
+  return planoParaAbrigo(origem, abrigo, zonas);
+}
+
 /** Alias síncrono (USSD/SMS offline) — usa desvio local simples */
 export const planoEvacuacao = planoEvacuacaoLocal;
+
+export type StatusAbrigo = "disponivel" | "quase_cheio" | "cheio";
+
+export function pctOcupado(abrigo: Shelter): number {
+  return Math.round((abrigo.ocupado / abrigo.capacidadeTotal) * 100);
+}
+
+export function vagasDisponiveis(abrigo: Shelter): number {
+  return Math.max(0, abrigo.capacidadeTotal - abrigo.ocupado);
+}
+
+export function statusAbrigo(abrigo: Shelter): StatusAbrigo {
+  const pct = pctOcupado(abrigo);
+  if (pct >= 100) return "cheio";
+  if (pct >= 70) return "quase_cheio";
+  return "disponivel";
+}
+
+export const STATUS_LABEL: Record<StatusAbrigo, string> = {
+  disponivel: "DISPONÍVEL",
+  quase_cheio: "QUASE CHEIO",
+  cheio: "CHEIO",
+};
 
 export function bairroPorNome(
   nome: string,

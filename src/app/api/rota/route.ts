@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { abrigos, zonasRisco } from "@/data/beira";
 import {
-  planoEvacuacaoLocal,
+  planoParaAbrigo,
   abrigoMaisProximo,
   abrigosComVagas,
   gerarPassosDeCoordenadas,
@@ -10,7 +10,10 @@ import { obterRotaOrs } from "@/lib/ors";
 
 export async function POST(req: NextRequest) {
   try {
-    const { origem } = (await req.json()) as { origem: [number, number] };
+    const { origem, abrigoId } = (await req.json()) as {
+      origem: [number, number];
+      abrigoId?: string;
+    };
 
     if (
       !origem ||
@@ -21,9 +24,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ erro: "Origem inválida" }, { status: 400 });
     }
 
+    const abrigoAlvo = abrigoId ? abrigos.find((a) => a.id === abrigoId) : undefined;
     const comVagas = abrigosComVagas(abrigos);
     const lista = comVagas.length > 0 ? comVagas : abrigos;
-    const abrigo = abrigoMaisProximo(origem, lista);
+    const abrigo = abrigoAlvo ?? abrigoMaisProximo(origem, lista);
 
     const rotaOrs = await obterRotaOrs(origem, abrigo.coordenadas, zonasRisco);
 
@@ -39,7 +43,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(plano);
     }
 
-    const planoLocal = planoEvacuacaoLocal(origem, abrigos, zonasRisco);
+    const planoLocal = planoParaAbrigo(origem, abrigo, zonasRisco);
     return NextResponse.json({ ...planoLocal, fonte: "local" as const });
   } catch {
     return NextResponse.json({ erro: "Falha ao calcular rota" }, { status: 500 });
