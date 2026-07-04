@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="pt"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ROTA SEGURA MZ - Lista de Abrigos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#5c4300",
+                        "on-secondary-container": "#003567",
+                        "secondary-fixed-dim": "#a5c8ff",
+                        "outline-variant": "#e4beba",
+                        "on-primary-container": "#fff2f0",
+                        "on-surface-variant": "#5b403d",
+                        "inverse-primary": "#ffb3ac",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#fff0ef",
+                        "primary-fixed-dim": "#ffb3ac",
+                        "on-tertiary-container": "#fff3e3",
+                        "on-secondary-fixed-variant": "#004786",
+                        "tertiary": "#715300",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#ffe2de",
+                        "primary-fixed": "#ffdad6",
+                        "surface-container-highest": "#f9dcd9",
+                        "surface-tint": "#ba1a20",
+                        "background": "#fff8f7",
+                        "on-surface": "#271816",
+                        "on-tertiary-fixed": "#261a00",
+                        "tertiary-container": "#8f6a00",
+                        "secondary-container": "#54a0fe",
+                        "tertiary-fixed": "#ffdfa0",
+                        "on-error-container": "#93000a",
+                        "outline": "#8f6f6c",
+                        "inverse-surface": "#3e2c2a",
+                        "on-primary-fixed": "#410003",
+                        "surface": "#fff8f7",
+                        "primary-container": "#d32f2f",
+                        "tertiary-fixed-dim": "#f8bd2a",
+                        "on-secondary-fixed": "#001c3a",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#930010",
+                        "primary": "#af101a",
+                        "surface-dim": "#f1d3d0",
+                        "surface-variant": "#f9dcd9",
+                        "inverse-on-surface": "#ffedeb",
+                        "surface-container": "#ffe9e7",
+                        "surface-bright": "#fff8f7",
+                        "on-background": "#271816",
+                        "secondary-fixed": "#d4e3ff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#005faf",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "touch-target-min": "48px",
+                        "gutter-mobile": "16px",
+                        "gutter-desktop": "24px",
+                        "stack-lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "button-text": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "button-text": ["16px", {"lineHeight": "24px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "26px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .low-power-bg {
+            background-color: #fff8f7;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="low-power-bg text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-gutter-mobile h-touch-target-min bg-error text-on-error border-b-2 border-on-error-container shadow-none">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[24px]">warning</span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-on-error tracking-tight">ROTA SEGURA MZ</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="h-touch-target-min w-touch-target-min flex items-center justify-center hover:bg-on-error/10 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[24px]">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="pt-[64px] px-gutter-mobile flex flex-col gap-stack-md">
+<!-- Emergency Alert Banner -->
+<div class="bg-error text-on-error p-4 rounded-none border-2 border-on-error-container mt-4 animate-pulse">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined fill-icon text-[24px]">priority_high</span>
+<div>
+<h2 class="font-headline-md text-headline-md leading-tight">ALERTA CRÍTICO</h2>
+<p class="font-body-md text-body-md opacity-90">Inundações severas na zona baixa. Dirija-se ao abrigo mais próximo imediatamente.</p>
+</div>
+</div>
+</div>
+<!-- Filter Action Section -->
+<div class="flex flex-col gap-stack-sm pt-2">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface-variant">Abrigos Disponíveis</h3>
+<span class="font-label-lg text-label-lg px-2 py-1 bg-surface-container-highest rounded text-on-surface">3 locais próximos</span>
+</div>
+<!-- Toggle Filter -->
+<label class="flex items-center gap-3 bg-surface-container p-3 border-2 border-outline-variant cursor-pointer active:scale-[0.98] transition-transform">
+<input class="w-6 h-6 text-primary border-outline-variant focus:ring-primary rounded-sm" id="filter-vagas" type="checkbox"/>
+<span class="font-button-text text-button-text select-none">Mostrar apenas com vaga</span>
+</label>
+</div>
+<!-- Shelter List (The Cards) -->
+<div class="flex flex-col gap-stack-md pb-8" id="shelter-list">
+<!-- Card 1: Escola Primária -->
+<article class="shelter-card flex flex-col bg-surface border-2 border-outline p-4 gap-3" data-vagas="true">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-headline-md text-headline-md leading-none">Escola Primária 24 de Julho</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">1.2km de distância</p>
+</div>
+<span class="material-symbols-outlined text-tertiary">near_me</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-lg text-label-lg">
+<span>Capacidade: 42/80 vagas</span>
+<span class="text-green-700 font-bold">DISPONÍVEL</span>
+</div>
+<!-- Progress Bar (Verde) -->
+<div class="w-full h-4 bg-surface-container-highest border border-outline-variant overflow-hidden">
+<div class="h-full bg-green-600" style="width: 52.5%"></div>
+</div>
+</div>
+<button class="w-full h-touch-target-min bg-secondary text-on-secondary font-button-text text-button-text flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">directions</span>
+                    COMO CHEGAR
+                </button>
+</article>
+<!-- Card 2: Centro Comunitário -->
+<article class="shelter-card flex flex-col bg-surface border-2 border-outline p-4 gap-3" data-vagas="true">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-headline-md text-headline-md leading-none">Centro Comunitário Matacuane</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">2.5km de distância</p>
+</div>
+<span class="material-symbols-outlined text-tertiary">near_me</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-lg text-label-lg">
+<span>Capacidade: 78/80 vagas</span>
+<span class="text-orange-700 font-bold">QUASE CHEIO</span>
+</div>
+<!-- Progress Bar (Amarelo/Orange) -->
+<div class="w-full h-4 bg-surface-container-highest border border-outline-variant overflow-hidden">
+<div class="h-full bg-orange-500" style="width: 97.5%"></div>
+</div>
+</div>
+<button class="w-full h-touch-target-min bg-secondary text-on-secondary font-button-text text-button-text flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">directions</span>
+                    COMO CHEGAR
+                </button>
+</article>
+<!-- Card 3: Ginásio Municipal -->
+<article class="shelter-card flex flex-col bg-surface-dim border-2 border-error p-4 gap-3 opacity-80" data-vagas="false">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="font-headline-md text-headline-md leading-none">Ginásio Municipal</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">3.1km de distância</p>
+</div>
+<span class="material-symbols-outlined text-error">block</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-lg text-label-lg">
+<span>Capacidade: 80/80 vagas</span>
+<span class="text-error font-extrabold uppercase">CHEIO</span>
+</div>
+<!-- Progress Bar (Vermelho) -->
+<div class="w-full h-4 bg-surface-container-highest border border-outline-variant overflow-hidden">
+<div class="h-full bg-error" style="width: 100%"></div>
+</div>
+</div>
+<div class="w-full h-touch-target-min bg-outline-variant text-on-surface-variant font-button-text text-button-text flex items-center justify-center gap-2 cursor-not-allowed">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+                    SEM VAGAS
+                </div>
+</article>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-2 py-2 bg-surface border-t-2 border-outline-variant">
+<!-- Mapa -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all h-touch-target-min w-1/4" href="#">
+<span class="material-symbols-outlined text-[24px]">map</span>
+<span class="font-label-lg text-label-lg">Mapa</span>
+</a>
+<!-- Lista (ACTIVE) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-all h-touch-target-min w-1/4" href="#">
+<span class="material-symbols-outlined fill-icon text-[24px]">list_alt</span>
+<span class="font-label-lg text-label-lg font-bold">Lista</span>
+</a>
+<!-- Alertas -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all h-touch-target-min w-1/4" href="#">
+<span class="material-symbols-outlined text-[24px]">notifications_active</span>
+<span class="font-label-lg text-label-lg">Alertas</span>
+</a>
+<!-- Staff -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all h-touch-target-min w-1/4" href="#">
+<span class="material-symbols-outlined text-[24px]">shield_person</span>
+<span class="font-label-lg text-label-lg">Staff</span>
+</a>
+</nav>
+<script>
+        // Simple Interaction logic for filtering
+        const filterCheckbox = document.getElementById('filter-vagas');
+        const cards = document.querySelectorAll('.shelter-card');
+
+        filterCheckbox.addEventListener('change', () => {
+            const onlyShowAvailable = filterCheckbox.checked;
+            
+            cards.forEach(card => {
+                if (onlyShowAvailable) {
+                    if (card.getAttribute('data-vagas') === 'false') {
+                        card.classList.add('hidden');
+                    } else {
+                        card.classList.remove('hidden');
+                    }
+                } else {
+                    card.classList.remove('hidden');
+                }
+            });
+        });
+
+        // Micro-interaction for feedback
+        cards.forEach(card => {
+            card.addEventListener('click', function() {
+                if(this.getAttribute('data-vagas') === 'true') {
+                    this.classList.add('scale-[0.98]');
+                    setTimeout(() => this.classList.remove('scale-[0.98]'), 150);
+                }
+            });
+        });
+    </script>
+</body></html>
