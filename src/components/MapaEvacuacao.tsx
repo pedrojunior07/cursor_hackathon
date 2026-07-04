@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import maplibregl from "maplibre-gl";
-import { BEIRA_CENTER, abrigos, zonasRisco } from "@/data/beira";
+import { BEIRA_CENTER, zonasRisco } from "@/data/beira";
 import { capacidadeLabel } from "@/lib/evacuation";
 import { obterPlanoEvacuacao, type PlanoComFonte } from "@/lib/rota-client";
-import type { EvacuationPlan } from "@/types";
+import { useAbrigos } from "@/lib/use-abrigos";
+import type { EvacuationPlan, Shelter } from "@/types";
 
 type Props = {
   onPlano?: (plano: EvacuationPlan) => void;
@@ -14,8 +15,10 @@ type Props = {
 };
 
 export function MapaEvacuacao({ onPlano, abrigoAlvoId }: Props) {
+  const { abrigos } = useAbrigos();
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
+  const abrigosRef = useRef<Shelter[]>(abrigos);
   const [posicao, setPosicao] = useState<[number, number] | null>(null);
   const [plano, setPlano] = useState<PlanoComFonte | null>(null);
   const [aCarregar, setACarregar] = useState(true);
@@ -147,7 +150,7 @@ export function MapaEvacuacao({ onPlano, abrigoAlvoId }: Props) {
         type: "geojson",
         data: {
           type: "FeatureCollection",
-          features: abrigos.map((a) => ({
+          features: abrigosRef.current.map((a) => ({
             type: "Feature",
             properties: {
               nome: a.nome,
@@ -186,6 +189,25 @@ export function MapaEvacuacao({ onPlano, abrigoAlvoId }: Props) {
       mapRef.current = null;
     };
   }, []);
+
+  useEffect(() => {
+    abrigosRef.current = abrigos;
+    const map = mapRef.current;
+    const source = map?.getSource("abrigos") as maplibregl.GeoJSONSource | undefined;
+    if (!source) return;
+    source.setData({
+      type: "FeatureCollection",
+      features: abrigos.map((a) => ({
+        type: "Feature",
+        properties: {
+          nome: a.nome,
+          bairro: a.bairro,
+          vagas: a.capacidadeTotal - a.ocupado,
+        },
+        geometry: { type: "Point", coordinates: a.coordenadas },
+      })),
+    });
+  }, [abrigos]);
 
   const obterGps = () => {
     setErroGps(null);

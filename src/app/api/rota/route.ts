@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { abrigos, zonasRisco } from "@/data/beira";
+import { abrigos as abrigosEstaticos, zonasRisco } from "@/data/beira";
+import { listarAbrigosDb } from "@/lib/abrigos-repo";
 import {
   planoParaAbrigo,
   abrigoMaisProximo,
@@ -24,6 +25,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ erro: "Origem inválida" }, { status: 400 });
     }
 
+    const abrigos = (await listarAbrigosDb()) ?? abrigosEstaticos;
     const abrigoAlvo = abrigoId ? abrigos.find((a) => a.id === abrigoId) : undefined;
     const comVagas = abrigosComVagas(abrigos);
     const lista = comVagas.length > 0 ? comVagas : abrigos;

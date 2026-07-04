@@ -4,10 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import { TopAppBar } from "@/components/ui/TopAppBar";
 import { Nav } from "@/components/Nav";
 import { ShelterCard } from "@/components/ShelterCard";
-import { abrigos, bairros, BEIRA_CENTER } from "@/data/beira";
+import { bairros, BEIRA_CENTER } from "@/data/beira";
 import { distanciaMetros, statusAbrigo } from "@/lib/evacuation";
+import { useAbrigos } from "@/lib/use-abrigos";
 
 export default function PaginaListaAbrigos() {
+  const { abrigos } = useAbrigos();
   const [posicao, setPosicao] = useState<[number, number]>(BEIRA_CENTER);
   const [somenteComVaga, setSomenteComVaga] = useState(false);
 

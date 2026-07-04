@@ -6,9 +6,10 @@ import { useParams } from "next/navigation";
 import { TopAppBar } from "@/components/ui/TopAppBar";
 import { Nav } from "@/components/Nav";
 import { CapacityBar } from "@/components/CapacityBar";
-import { abrigos, BEIRA_CENTER } from "@/data/beira";
+import { BEIRA_CENTER } from "@/data/beira";
 import { distanciaMetros, pctOcupado, statusAbrigo, vagasDisponiveis, STATUS_LABEL } from "@/lib/evacuation";
 import { iconeServico, labelServico } from "@/lib/servicos";
+import { useAbrigos } from "@/lib/use-abrigos";
 
 const STATUS_DOT: Record<ReturnType<typeof statusAbrigo>, string> = {
   disponivel: "bg-green-600",
@@ -24,6 +25,7 @@ const STATUS_TEXT: Record<ReturnType<typeof statusAbrigo>, string> = {
 
 export default function PaginaDetalheAbrigo() {
   const { id } = useParams<{ id: string }>();
+  const { abrigos } = useAbrigos();
   const abrigo = abrigos.find((a) => a.id === id);
   const [posicao, setPosicao] = useState<[number, number]>(BEIRA_CENTER);
 

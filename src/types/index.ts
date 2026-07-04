@@ -6,6 +6,8 @@ export type Shelter = {
   capacidadeTotal: number;
   ocupado: number;
   servicos: string[];
+  /** ISO timestamp da última actualização de capacidade (só presente quando vem da BD) */
+  actualizadoEm?: string;
 };
 
 export type Bairro = {

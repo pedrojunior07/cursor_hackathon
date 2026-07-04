@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { SMS_SHORTCODE } from "@/data/beira";
+import { SMS_SHORTCODE, bairros } from "@/data/beira";
+import { bairroPorNome } from "@/lib/evacuation";
+import { interpretarPedidoCliente } from "@/lib/intent-client";
 import {
   smsInicial,
   processarSms,
@@ -11,6 +13,17 @@ import {
 import type { SmsMessage } from "@/types";
 
 const SMS_QUEUE_KEY = "rota-segura-sms-queue";
+const COMANDOS_CONHECIDOS = new Set(["AJUDA", "SOS", "PROXIMO", "GPS", "ZONA", "RISCO"]);
+
+/** Se o texto não for um comando conhecido nem um bairro reconhecido, tenta IA como fallback. */
+async function resolverEntradaSms(entrada: string): Promise<string> {
+  if (COMANDOS_CONHECIDOS.has(entrada.toUpperCase())) return entrada;
+  if (bairroPorNome(entrada, bairros)) return entrada;
+
+  const intento = await interpretarPedidoCliente(entrada);
+  const bairroIA = intento?.bairroId ? bairros.find((b) => b.id === intento.bairroId) : undefined;
+  return bairroIA ? bairroIA.nome : entrada;
+}
 
 export function SimuladorSms() {
   const [sessao, setSessao] = useState<SmsSession>(smsInicial);
@@ -45,9 +58,11 @@ export function SimuladorSms() {
     return () => window.removeEventListener("rota-segura-sms", processarFila);
   }, []);
 
-  const enviar = () => {
-    if (!texto.trim()) return;
-    const { sessao: nova, mensagens: novas } = processarSms(sessao, texto);
+  const enviar = async () => {
+    const entrada = texto.trim();
+    if (!entrada) return;
+    const entradaResolvida = await resolverEntradaSms(entrada);
+    const { sessao: nova, mensagens: novas } = processarSms(sessao, entradaResolvida);
     setSessao(nova);
     setMensagens((m) => [...m, ...novas]);
     setTexto("");

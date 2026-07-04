@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { USSD_CODE } from "@/data/beira";
+import { USSD_CODE, bairros } from "@/data/beira";
+import { bairroPorNome } from "@/lib/evacuation";
+import { interpretarPedidoCliente } from "@/lib/intent-client";
 import {
   ussdInicial,
   renderUssd,
@@ -9,6 +11,23 @@ import {
   type UssdContext,
 } from "@/lib/ussd";
 import type { UssdScreen } from "@/types";
+
+const PASSOS_COM_BAIRRO = new Set(["resgate_bairro", "zona_bairro", "sms_bairro"]);
+
+/** Se o passo espera um bairro e a correspondência directa falha, tenta IA como fallback. */
+async function resolverEntradaUssd(ctx: UssdContext, entrada: string): Promise<string> {
+  if (!PASSOS_COM_BAIRRO.has(ctx.state.step)) return entrada;
+
+  const idx = parseInt(entrada, 10);
+  const direta = !isNaN(idx) && idx >= 1 && idx <= bairros.length
+    ? bairros[idx - 1]
+    : bairroPorNome(entrada, bairros);
+  if (direta) return entrada;
+
+  const intento = await interpretarPedidoCliente(entrada);
+  const bairroIA = intento?.bairroId ? bairros.find((b) => b.id === intento.bairroId) : undefined;
+  return bairroIA ? bairroIA.nome : entrada;
+}
 
 const SMS_QUEUE_KEY = "rota-segura-sms-queue";
 
@@ -34,12 +53,14 @@ export function SimuladorUssd() {
     setInput("");
   };
 
-  const enviar = useCallback(() => {
-    if (!input.trim()) return;
-    const resultado = processarUssd(ctx, input);
+  const enviar = useCallback(async () => {
+    const entrada = input.trim();
+    if (!entrada) return;
+    const entradaResolvida = await resolverEntradaUssd(ctx, entrada);
+    const resultado = processarUssd(ctx, entradaResolvida);
     setCtx(resultado.ctx);
     setEcran(resultado.screen);
-    setHistorico((h) => [...h, `> ${input}`, ...resultado.screen.linhas]);
+    setHistorico((h) => [...h, `> ${entrada}`, ...resultado.screen.linhas]);
     if (resultado.smsDisparo?.length) {
       enfileirarSms(resultado.smsDisparo);
     }

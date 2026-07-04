@@ -36,13 +36,13 @@ export function TopAppBar({ title = "ROTA SEGURA MZ", backHref }: Props) {
           {title}
         </h1>
       </div>
-      <button
-        type="button"
-        aria-label="Conta"
+      <Link
+        href="/staff"
+        aria-label="Modo staff"
         className="flex h-touch-target-min w-touch-target-min items-center justify-center transition-transform hover:bg-on-error/10 active:scale-95"
       >
         <span className="material-symbols-outlined text-[24px]">account_circle</span>
-      </button>
+      </Link>
     </header>
   );
 }
